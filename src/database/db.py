@@ -18,11 +18,8 @@ def check_pw(password, hashed_pswrd):
 
 def teacher_login(username, password):
   response = supabase.table("teachers").select("*").eq("username", username).execute()
-  print("Db response:", response.data)
   if response.data:
     teacher = response.data[0]
-    print("Stored hash:", teacher["password"])
-    print("Match:", check_pw(password, teacher["password"]))
     if check_pw(password, teacher["password"]):
       return teacher
   return None
