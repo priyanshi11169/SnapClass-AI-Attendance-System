@@ -11,11 +11,11 @@ def load_dlib_models():
   detector = dlib.get_frontal_face_detector()
   
   sp = dlib.shape_predictor(
-    face_recognition_models.pose_predictor_model_loaction()
+    face_recognition_models.pose_predictor_model_location()
   )
   
   face_rec = dlib.face_recognition_model_v1(
-    face_recognition_models.face_recognition_model_loaction()
+    face_recognition_models.face_recognition_model_location()
   )
   
   return detector, sp, face_rec
@@ -77,12 +77,15 @@ def predict_attendance(class_image_np):
   
   if not model_data:
     return detected_student, [], len(embeddings)
-  
+
   clf = model_data["clf"]
   X_train = model_data["X"]
   y_train = model_data["y"]
   
   all_students = sorted(list(set(y_train)))
+  
+  if len(embeddings) > 1 and len(all_students) == 1:
+    return detected_student, [], len(embeddings)
   
   for embedding in embeddings:
     if len(all_students) >= 2:
