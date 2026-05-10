@@ -3,6 +3,7 @@ from src.ui.base_layout import style_background_dashboard, style_base_layout
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
 from src.database.db import check_teacher_exists, create_teacher, teacher_login
+from src.components.dialogue_create_subject import create_subject_dialogue
 
 def teacher_screen():
   
@@ -66,6 +67,8 @@ def teacher_dashboard():
     if st.button("Attendance Records", type=type3, width="stretch"):
       st.session_state.current_teacher_tab = "attendance_records"
       st.rerun()
+      
+  st.space()
   
   if st.session_state.current_teacher_tab == "take_attendance":
     teacher_tab_take_attendance()
@@ -74,13 +77,25 @@ def teacher_dashboard():
   if st.session_state.current_teacher_tab == "attendance_records":
     teacher_tab_attendance_records()
     
+  st.divider()
+    
   footer_dashboard()
  
 def teacher_tab_take_attendance():
   st.header('Take Attendance')
   
 def teacher_tab_manage_subjects():
-  st.header('Manage subjects')
+  teacher_id = st.session_state.teacher_data["teacher_id"]
+  col1, col2 = st.columns(2)
+  with col1:
+   st.header('Manage subjects')
+  with col2:
+    if st.button("Create Subject", width="stretch"):
+      try:
+       create_subject_dialogue(teacher_id)
+      except Exception as e:
+        print(f"Error: {e}")
+      
   
 def teacher_tab_attendance_records():
   st.header('Attendance records')
