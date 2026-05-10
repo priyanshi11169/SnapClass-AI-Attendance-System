@@ -78,6 +78,8 @@ def student_screen():
       
       try:
         audio_data = st.audio_input("Record a short phrase like i am present, My name is Priyanshi")
+        if audio_data:
+         st.session_state["audio_data"] = audio_data.read()
       except Exception:
         st.error("Audio Data failed!")
         
@@ -90,16 +92,8 @@ def student_screen():
               face_emb = embedding[0].tolist()
               
               voice_emb = None
-              
-              if audio_data:
-                audio_data.seek(0) 
-                raw_audio = audio_data.read()  
-                voice_emb = get_voice_embedding(raw_audio)
-                st.write("Voice emb:", voice_emb)
-              else:
-                st.write("audio_data is None!") 
-                
-              
+              raw_audio = st.session_state.get("audio_data", None)
+              voice_emb = get_voice_embedding(raw_audio)    
               response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
               
               if response_data:
