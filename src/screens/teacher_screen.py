@@ -2,8 +2,10 @@ import streamlit as st
 from src.ui.base_layout import style_background_dashboard, style_base_layout
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
-from src.database.db import check_teacher_exists, create_teacher, teacher_login
+from src.database.db import check_teacher_exists, create_teacher, teacher_login, get_teacher_subjects
 from src.components.dialogue_create_subject import create_subject_dialogue
+from src.components.subject_card import subject_card
+
 
 def teacher_screen():
   
@@ -95,7 +97,32 @@ def teacher_tab_manage_subjects():
        create_subject_dialogue(teacher_id)
       except Exception as e:
         print(f"Error: {e}")
+        
+  
+  subjects = get_teacher_subjects(teacher_id)
+  if subjects:
+    for sub in subjects:
+      stats = [
+        ("🧑‍🎓", "Students", sub['total_students']),
+        ("🕐", "Classes", sub['total_classes']),
+      ]
       
+      def share_btn():
+        if st.button(f"Share Code: {sub['name']}", key=f"Share {sub['subject_code']}", icon=":material/share:"):
+          share_subject_dialogue(sub['name'], sub['subject_code'])
+          
+      st.space()
+      
+      subject_card(
+        name = sub['name'],
+        code = sub['subject_code'],
+        section = sub['section'],
+        stats = stats,
+        footer_callback = share_btn
+      )
+  else:
+    st.info("No Subjects Found. Create one above! ")
+    
   
 def teacher_tab_attendance_records():
   st.header('Attendance records')
