@@ -77,4 +77,6 @@ def unenroll_student_from_subject(subject_id, student_id):
   
   return response.data
   
-  
+def create_attendance(logs):
+  response = supabase.table("attendance_logs").insert(logs).execute()
+  return response.data
