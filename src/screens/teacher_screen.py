@@ -13,6 +13,7 @@ from src.pipelines.face_pipeline import predict_attendance
 from datetime import datetime
 import pandas as pd
 from src.components.attendance_dialog import attendance_result_dialog
+from src.components.voice_attendance_dialog import voice_attendance_dialog
 
 def teacher_screen():
   
@@ -106,7 +107,7 @@ def teacher_tab_take_attendance():
   
   subject_options = {f"{s['name']} - {s['subject_code']}" :  s["subject_id"] for s in subjects}
   
-  col1, col2 = st.columns(2)
+  col1, col2 = st.columns(2, vertical_alignment="bottom")
   
   with col1:
    selected_subject_label = st.selectbox("Select Subjects", options=list(subject_options.keys()))
@@ -125,18 +126,18 @@ def teacher_tab_take_attendance():
     
     for idx, img in enumerate(st.session_state.attendance_images):
       with gallery_cols[idx % 4]:
-        st.image(img, width="stretch", caption=f"Photo {idx+1}")    
+        st.image(img, width="Stretch", caption=f"Photo {idx+1}")  
         
+  has_photos = st.session_state.attendance_images    
   t1, t2, t3 = st.columns(3)
   
   with t1:
-    if st.button("Clear Photos", width="stretch", type="primary", icon=":material/delete:"):
+    if st.button("Clear Photos", width="stretch", type="tertiary", icon=":material/delete:", disabled=not has_photos):
       st.session_state.attendance_images = []
       st.rerun()
-      
         
   with t2:
-    if st.button("Run Face Analysis", width="stretch", type="secondary", icon=":material/analytics:"):
+    if st.button("Run Face Analysis", width="stretch", type="secondary", icon=":material/analytics:",  disabled=not has_photos):
       with st.spinner('Deep Scanning Classroom Photos....'):
         all_detected_ids = {}
         
@@ -151,12 +152,13 @@ def teacher_tab_take_attendance():
              all_detected_ids.setdefault(student_id, []).append(f"Photo {idx+1}")
              
         
-        enrolled_res = supabase.table("subjects_students").select("*, students(*)").select("subject_id", selected_subject_id)
+        enrolled_res = supabase.table("subjects_students").select("*, students(*)").eq("subject_id", selected_subject_id).execute()
         
         enrolled_students = enrolled_res.data
         
         if not enrolled_students:
           st.warning("No student enrolled in this course!")
+          return
           
         else:
           
@@ -186,7 +188,8 @@ def teacher_tab_take_attendance():
         attendance_result_dialog(pd.DataFrame(results), attendance_to_log)
         
   with t3:
-    st.button("Use Voice Attendance", type="primary", width="stretch", icon=":material/mic:")
+    if st.button("Run Voice Analysis", type="primary", width="stretch", icon=":material/mic:"):
+      voice_attendance_dialog(selected_subject_id)
             
             
 def teacher_tab_manage_subjects():

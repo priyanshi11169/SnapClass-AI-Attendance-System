@@ -1,15 +1,15 @@
 import streamlit as st
 
 def background_style_layout():
+  #header {visibility: hidden;}  
   
   st.markdown("""
               <style>
                 .stApp {
                   background-color:#5865F2 !important;
                 }
-                
-            
-                
+                   
+                           
                 .stApp div[data-testid="stColumn"]{
                   background-color:#E0E3FF !important;
                   padding:2.5rem !important;
@@ -29,7 +29,7 @@ def style_background_dashboard():
                   background: #E0E3FF !important
                 }
                 
-              
+                
                 
               </style>
               """, unsafe_allow_html=True)
