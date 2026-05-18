@@ -1,13 +1,17 @@
 import streamlit as st
 
 def background_style_layout():
-  #header {visibility: hidden;}  
+    
   
   st.markdown("""
               <style>
                 .stApp {
                   background-color:#5865F2 !important;
                 }
+                
+                header {
+                  visibility: hidden;
+                  }
                    
                            
                 .stApp div[data-testid="stColumn"]{
@@ -29,8 +33,11 @@ def style_background_dashboard():
                   background: #E0E3FF !important
                 }
                 
+                header {
+                  visibility: hidden;
+                  }
                 
-                
+        
               </style>
               """, unsafe_allow_html=True)
   
@@ -47,6 +54,10 @@ def style_base_layout():
                 .block-container {
                   padding-top: 1.5rem !important;
                   }
+                  
+                #MainMenu, footer, header {
+                  visibility : hidden;
+                }
   
                   
                 h1 {

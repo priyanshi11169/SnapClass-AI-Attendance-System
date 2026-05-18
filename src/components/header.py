@@ -8,7 +8,7 @@ def header_home():
               flex-direction:column; align-items:center;" >
                 <img src="https://i.ibb.co/YTYGn5qV/logo.png" height="120px" />
                 
-                <h1 style="color:#E0E3FF; text-align:center; ">SNAP<br/>CLASS</h1>
+                <h1 style="color:#E0E3FF; text-align:center; ">Snap<br/>Class</h1>
                 
               </div>
               """, unsafe_allow_html=True)
@@ -19,6 +19,6 @@ def header_dashboard():
   st.markdown(f"""
               <div style="display:flex;  justify-content:center; gap:10px; text-align:center; ">
                 <img src={logo_url} style="height:85px;"/>
-                <h2 style="color:#5865F2; text-align:left; ">SNAP<br/>CLASS</h2>
+                <h2 style="color:#5865F2; text-align:left; ">Snap<br/>Class</h2>
               </div>
               """, unsafe_allow_html=True)
