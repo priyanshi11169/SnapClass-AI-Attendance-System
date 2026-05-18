@@ -8,7 +8,7 @@ pandas
 scikit-learn
 dlib-bin
 face_recognition_models
-setuptools>=65.0.0
+setuptools==80.9.0
 
 supabase
 bcrypt
