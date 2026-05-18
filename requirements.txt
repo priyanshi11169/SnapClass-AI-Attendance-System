@@ -18,4 +18,4 @@ pillow
 
 # Audio Recognition
 librosa 
-resemblyzer --no-deps
+resemblyzer 
