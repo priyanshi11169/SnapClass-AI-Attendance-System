@@ -13,4 +13,4 @@ dist/
 .streamlit/
 .vscode
 
-src/database/config.py
+
