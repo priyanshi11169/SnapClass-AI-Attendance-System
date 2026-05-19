@@ -264,7 +264,7 @@ def teacher_tab_attendance_records():
   )
   
   summary['Attendance Stats'] = (
-    "✅" + summary["Present_count"].astype(str) + " /" + summary["Total_Count"].astype(str) + "Students"
+    "✅" + summary["Present_count"].astype(str) + " /" + summary["Total_Count"].astype(str) + " Students"
   )
      
   display_df = (
