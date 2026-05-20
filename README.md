@@ -149,12 +149,7 @@ streamlit run app.py
 3. If matched → logged in instantly
 4. If new → registration form appears with optional voice enrollment
 
----
-
-## 🙏 Credits
-
 - Built by **Priyanshi Tiwari**
----
 
 ## 📄 License
 
