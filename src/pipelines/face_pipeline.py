@@ -95,7 +95,7 @@ def predict_attendance(class_image_np):
     student_embedding = X_train[y_train.index(predicted_id)]
     
     best_match_score = np.linalg.norm(student_embedding - embedding)
-    resemblance_score = 0.6
+    resemblance_score = 0.4
     
     if best_match_score <= resemblance_score:
       detected_student[predicted_id] = "True"
