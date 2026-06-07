@@ -57,8 +57,8 @@ def get_trained_model():
   clf = SVC(kernel='linear', probability=True, class_weight="balanced")   
   try:
     clf.fit(X, y)  
-  except ValueError:
-    pass
+  except Exception as e:
+    print("Error: ",e)
   
   return {"clf":clf, "X":X, "y":y}
 
@@ -84,8 +84,6 @@ def predict_attendance(class_image_np):
   
   all_students = sorted(list(set(y_train)))
   
-  if len(embeddings) > 1 and len(all_students) == 1:
-    return detected_student, [], len(embeddings)
   
   for embedding in embeddings:
     if len(all_students) >= 2:
